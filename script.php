@@ -1,16 +1,42 @@
 #!/usr/bin/php
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Register The Composer Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader
-| for our application. We just need to utilize it! We'll require it
-| into the script here so that we do not have to worry about the
-| loading of any our classes "manually". Feels great to relax.
-|
-*/
-
+/**
+ * Register The Composer Auto Loader
+ */
 require __DIR__.'/vendor/autoload.php';
+
+use League\Csv\Reader;
+
+$path = 'input.csv';
+
+try {
+
+    if (!file_exists($path))
+    {
+        throw new Exception('File does not exist');
+    }
+
+    $reader = Reader::createFromPath($path);
+
+    foreach ($reader as $key => $row)
+    {
+        $transaction = \App\Transactions\TransactionFactory::get($row);
+
+        if (!$transaction)
+        {
+            throw new Exception('Bad data');
+        }
+
+        echo \App\Currencies\Currency::convert('USD', 'JPY', 500); die;
+
+
+        var_dump($transaction); die;
+    }
+} catch (Exception $e) {
+    exit($e->getMessage());
+}
+
+
+
+//$argv; $argc;
