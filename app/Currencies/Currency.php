@@ -21,8 +21,7 @@ class Currency
      */
     public static function convert($from, $to, $amount, $precision = 2)
     {
-        if (self::DEFAULT_CURRENCY != $from && self::DEFAULT_CURRENCY != $to)
-        {
+        if (self::DEFAULT_CURRENCY != $from && self::DEFAULT_CURRENCY != $to) {
             // I have rates of the euro only.
             $amount = self::convert($from, self::DEFAULT_CURRENCY, $amount, $precision);
             $from = self::DEFAULT_CURRENCY;
@@ -36,7 +35,7 @@ class Currency
          * TASK.md:53
          */
 
-        $rounded = round($converted , $precision);
+        $rounded = round($converted, $precision);
 
         return $rounded;
     }

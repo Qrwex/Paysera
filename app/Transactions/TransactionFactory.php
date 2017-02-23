@@ -14,9 +14,8 @@ class TransactionFactory
      */
     public static function get(array $data)
     {
-        if (!Validator::validate($data))
-        {
-           return null;
+        if (!Validator::validate($data)) {
+            return null;
         }
 
         $reflect = new ReflectionClass(Transaction::class);
