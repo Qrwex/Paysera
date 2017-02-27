@@ -1,12 +1,14 @@
 #!/usr/bin/php
 <?php
 
+use League\Csv\Reader;
+use App\Transactions\TransactionFactory;
+use App\Currencies\Currency;
+
 /**
  * Register The Composer Auto Loader
  */
 require __DIR__ . '/vendor/autoload.php';
-
-use League\Csv\Reader;
 
 $path = 'input.csv';
 
@@ -19,14 +21,23 @@ try {
     $reader = Reader::createFromPath($path);
 
     foreach ($reader as $key => $row) {
-        $transaction = \App\Transactions\TransactionFactory::get($row);
+
+        $transaction = TransactionFactory::get($row);
 
         if (!$transaction) {
             throw new Exception('Bad data');
         }
 
-        echo \App\Currencies\Currency::convert('USD', 'JPY', 500);
+        $amount = Currency::convert('USD', 'JPY', 500);
+
+        $rounded = rtn($amount, .01);
+
+
+        dump($rounded);
+        dd('aa');
+        echo rtn();
         die;
+        echo \App\Currencies\Currency::convert('USD', 'JPY', 500);
 
 
         var_dump($transaction);
