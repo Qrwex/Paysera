@@ -4,6 +4,7 @@
 use League\Csv\Reader;
 use App\Transactions\TransactionFactory;
 use App\Currencies\Currency;
+use App\Reports\ReportFactory;
 
 /**
  * Register The Composer Auto Loader
@@ -20,29 +21,10 @@ try {
 
     $reader = Reader::createFromPath($path);
 
-    foreach ($reader as $key => $row) {
+    $report = ReportFactory::get($reader);
 
-        $transaction = TransactionFactory::get($row);
+    $report->dump();
 
-        if (!$transaction) {
-            throw new Exception('Bad data');
-        }
-
-        $amount = Currency::convert('USD', 'JPY', 500);
-
-        $rounded = rtn($amount, .01);
-
-
-        dump($rounded);
-        dd('aa');
-        echo rtn();
-        die;
-        echo \App\Currencies\Currency::convert('USD', 'JPY', 500);
-
-
-        var_dump($transaction);
-        die;
-    }
 } catch (Exception $e) {
     exit($e->getMessage());
 }

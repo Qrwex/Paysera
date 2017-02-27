@@ -4,6 +4,7 @@
 namespace App\Currencies\Exchange;
 
 use App\Currencies\Currency;
+use Exception;
 
 
 class Rate
@@ -12,7 +13,7 @@ class Rate
      * Exchange rates of the euro against foreign currencies.
      * @param $currency
      * @return float|int
-     * @throws \Exception
+     * @throws Exception
      */
     public static function get($currency)
     {
@@ -28,7 +29,7 @@ class Rate
             case Currency::DEFAULT_CURRENCY:
                 return 1;
             default:
-                throw new \Exception('Invalid currency');
+                throw new Exception('Invalid currency');
         }
     }
 }

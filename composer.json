@@ -9,7 +9,8 @@
     ],
     "require": {
         "league/csv": "^8.0",
-        "symfony/var-dumper": "^3.2"
+        "symfony/var-dumper": "^3.2",
+        "nesbot/carbon": "^1.22"
     },
     "autoload": {
         "psr-4": {

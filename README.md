@@ -1,7 +1,10 @@
-# How to
+### Commissions fees calculation
 
-1. Install PHP dependencies:
+##### Install PHP dependencies:
 ```
 composer install
 ```
-2.
+##### Run application
+```
+php script.php input.csv
+```

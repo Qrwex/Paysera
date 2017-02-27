@@ -4,10 +4,19 @@
 namespace App\Transactions;
 
 
+use DateTime;
+
 class Transaction
 {
     /**
-     * @var string
+     * string
+     */
+    const TYPE_IN = 'cash_in';
+
+    const TYPE_OUT = 'cash_out';
+
+    /**
+     * @var DateTime
      */
     protected $date;
 
@@ -47,7 +56,7 @@ class Transaction
      */
     public function __construct($date, $user_id, $user_type, $type, $amount, $currency)
     {
-        $this->date = $date;
+        $this->date = new DateTime($date);
         $this->user_id = (int)$user_id;
         $this->user_type = $user_type;
         $this->type = $type;
@@ -56,7 +65,7 @@ class Transaction
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getDate()
     {

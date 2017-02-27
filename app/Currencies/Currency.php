@@ -26,7 +26,7 @@ class Currency
             $from = self::DEFAULT_CURRENCY;
         }
 
-        $converted = ($amount * Exchange\Rate::get($from)) / Exchange\Rate::get($to);
+        $converted = ($amount * Exchange\Rate::get($to)) / Exchange\Rate::get($from);
 
         return $converted;
     }
