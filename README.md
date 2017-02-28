@@ -8,3 +8,7 @@ composer install
 ```
 php script.php input.csv
 ```
+##### Run tests
+```
+phpunit tests
+```

@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use App\Currencies\Currency;
 use PHPUnit\Framework\TestCase;
 
