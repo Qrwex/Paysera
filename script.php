@@ -2,8 +2,6 @@
 <?php
 
 use League\Csv\Reader;
-use App\Transactions\TransactionFactory;
-use App\Currencies\Currency;
 use App\Reports\ReportFactory;
 
 /**
@@ -11,9 +9,13 @@ use App\Reports\ReportFactory;
  */
 require __DIR__ . '/vendor/autoload.php';
 
-$path = 'input.csv';
-
 try {
+
+    if ($argc < 2) {
+        throw new Exception('Missing input');
+    }
+
+    $path = $argv[1];
 
     if (!file_exists($path)) {
         throw new Exception('File does not exist');
@@ -26,8 +28,5 @@ try {
     $report->dump();
 
 } catch (Exception $e) {
-    exit($e->getMessage());
+    dd('ERROR: ' . $e->getMessage());
 }
-
-
-//$argv; $argc;

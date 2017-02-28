@@ -8,12 +8,15 @@ use App\Currencies\Currency;
 
 class DataList
 {
+    const DEBUG = false;
+
     /**
      * @var array
      */
     protected $list = [];
 
     /**
+     * Append active transaction to a data list.
      * @param Transaction $transaction
      */
     public function append(Transaction $transaction)
@@ -41,6 +44,7 @@ class DataList
     }
 
     /**
+     * Get active transaction user week list.
      * @param Transaction $transaction
      * @return array
      */
@@ -57,5 +61,15 @@ class DataList
 
         return isset($this->list[$o][$t][$y][$w][$u]) ?
             $this->list[$o][$t][$y][$w][$u] : [];
+    }
+
+    /**
+     * Debug.
+     */
+    public function __destruct()
+    {
+        if (self::DEBUG) {
+            dd($this->list);
+        }
     }
 }
