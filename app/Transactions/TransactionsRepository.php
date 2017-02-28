@@ -6,17 +6,17 @@ namespace App\Transactions;
 
 use App\Currencies\Currency;
 
-class DataList
+class TransactionsRepository
 {
     const DEBUG = false;
 
     /**
      * @var array
      */
-    protected $list = [];
+    protected $repository = [];
 
     /**
-     * Append active transaction to a data list.
+     * Append active transaction to a repository.
      * @param Transaction $transaction
      */
     public function append(Transaction $transaction)
@@ -30,17 +30,17 @@ class DataList
         $t = $transaction->getUserType(); // user type
         $o = $transaction->getType(); // operation type
 
-        $this->list[$o][$t][$y][$w][$u]['list'][] = $transaction;
+        $this->repository[$o][$t][$y][$w][$u]['list'][] = $transaction;
 
-        if (!isset($this->list[$o][$t][$y][$w][$u]['total_amt'])) {
-            $this->list[$o][$t][$y][$w][$u]['total_amt'] = 0;
+        if (!isset($this->repository[$o][$t][$y][$w][$u]['total_amt'])) {
+            $this->repository[$o][$t][$y][$w][$u]['total_amt'] = 0;
         }
 
         $amount = Currency::convert(
             $transaction->getCurrency(), Currency::DEFAULT_CURRENCY, $transaction->getAmount()
         );
 
-        $this->list[$o][$t][$y][$w][$u]['total_amt'] += $amount;
+        $this->repository[$o][$t][$y][$w][$u]['total_amt'] += $amount;
     }
 
     /**
@@ -59,8 +59,8 @@ class DataList
         $t = $transaction->getUserType(); // user type
         $o = $transaction->getType(); // operation type
 
-        return isset($this->list[$o][$t][$y][$w][$u]) ?
-            $this->list[$o][$t][$y][$w][$u] : [];
+        return isset($this->repository[$o][$t][$y][$w][$u]) ?
+            $this->repository[$o][$t][$y][$w][$u] : [];
     }
 
     /**
@@ -69,7 +69,7 @@ class DataList
     public function __destruct()
     {
         if (self::DEBUG) {
-            dd($this->list);
+            dd($this->repository);
         }
     }
 }

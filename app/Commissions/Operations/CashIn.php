@@ -5,7 +5,7 @@ namespace App\Commissions\Operations;
 
 
 use App\Currencies\Currency;
-use App\Transactions\DataList;
+use App\Transactions\TransactionsRepository;
 use App\Transactions\Transaction;
 
 class CashIn implements OperationInterface
@@ -20,20 +20,20 @@ class CashIn implements OperationInterface
     protected $transaction;
 
     /**
-     * Transactions list needed for calculations.
-     * @var DataList
+     * Transactions repository needed for calculations.
+     * @var TransactionsRepository
      */
-    protected $list;
+    protected $repository;
 
     /**
      * CashIn Constructor
      * @param Transaction $transaction
-     * @param DataList $list
+     * @param TransactionsRepository $repository
      */
-    public function __construct(Transaction $transaction, DataList & $list)
+    public function __construct(Transaction $transaction, TransactionsRepository & $repository)
     {
         $this->transaction = $transaction;
-        $this->list = &$list;
+        $this->repository = &$repository;
     }
 
     /**
@@ -45,8 +45,8 @@ class CashIn implements OperationInterface
         // Get charged amount with applied free limits rules.
         $tax_amt = $this->getChargedAmount() * self::RATE;
 
-        // Append transaction data to list. Needed for a free limits calculations.
-        $this->getList()->append(
+        // Append transaction data to repository. Needed for a free limits calculations.
+        $this->getRepository()->append(
             $this->getTransaction()
         );
 
@@ -84,10 +84,10 @@ class CashIn implements OperationInterface
     }
 
     /**
-     * @return DataList
+     * @return TransactionsRepository
      */
-    private function getList()
+    private function getRepository()
     {
-        return $this->list;
+        return $this->repository;
     }
 }

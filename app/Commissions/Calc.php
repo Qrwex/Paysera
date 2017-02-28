@@ -5,7 +5,7 @@ namespace App\Commissions;
 
 use App\Commissions\Operations\CashIn;
 use App\Commissions\Operations\CashOut;
-use App\Transactions\DataList;
+use App\Transactions\TransactionsRepository;
 use App\Transactions\Transaction;
 use Exception;
 
@@ -21,16 +21,16 @@ class Calc
     ];
 
     /**
-     * @var DataList
+     * @var TransactionsRepository
      */
-    protected $list;
+    protected $repository;
 
     /**
      * Calc Constructor
      */
     public function __construct()
     {
-        $this->list = new DataList;
+        $this->repository = new TransactionsRepository;
     }
 
     /**
@@ -52,7 +52,7 @@ class Calc
         /**
          * @var $class \App\Commissions\Operations\OperationInterface
          */
-        $class = new $facade($transaction, $this->list);
+        $class = new $facade($transaction, $this->repository);
 
         return $class;
     }

@@ -5,7 +5,7 @@ namespace App\Commissions\Operations;
 
 
 use App\Currencies\Currency;
-use App\Transactions\DataList;
+use App\Transactions\TransactionsRepository;
 use App\Transactions\Transaction;
 use App\Users\User;
 use Exception;
@@ -27,20 +27,20 @@ class CashOut implements OperationInterface
     protected $transaction;
 
     /**
-     * Transactions list needed for calculations.
-     * @var DataList
+     * Transactions repository needed for calculations.
+     * @var TransactionsRepository
      */
-    protected $list;
+    protected $repository;
 
     /**
      * CashOut Constructor
      * @param Transaction $transaction
-     * @param DataList $list
+     * @param TransactionsRepository $repository
      */
-    public function __construct(Transaction $transaction, DataList & $list)
+    public function __construct(Transaction $transaction, TransactionsRepository & $repository)
     {
         $this->transaction = $transaction;
-        $this->list = &$list;
+        $this->repository = &$repository;
     }
 
     /**
@@ -52,8 +52,8 @@ class CashOut implements OperationInterface
         // Get charged amount with applied free limits rules.
         $tax_amt = $this->getChargedAmount() * self::RATE;
 
-        // Append transaction data to list. Needed for a free limits calculations.
-        $this->getList()->append(
+        // Append transaction data to repository. Needed for a free limits calculations.
+        $this->getRepository()->append(
             $this->getTransaction()
         );
 
@@ -82,7 +82,7 @@ class CashOut implements OperationInterface
      */
     private function getChargedAmount()
     {
-        $user_week_list = $this->getList()->getUserWeekList($this->getTransaction());
+        $user_week_list = $this->getRepository()->getUserWeekList($this->getTransaction());
 
         switch ($this->getTransaction()->getUserType()) {
             case User::TYPE_LEGAL:
@@ -175,10 +175,10 @@ class CashOut implements OperationInterface
     }
 
     /**
-     * @return DataList
+     * @return TransactionsRepository
      */
-    private function getList()
+    private function getRepository()
     {
-        return $this->list;
+        return $this->repository;
     }
 }
