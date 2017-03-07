@@ -58,7 +58,7 @@ class CashOut implements OperationInterface
         );
 
         // Checking for a min/max tax limits.
-        if ($this->getTransaction()->getType() == User::TYPE_LEGAL) {
+        if ($this->getTransaction()->getUserType() == User::TYPE_LEGAL) {
             $min_tax_amt = self::MIN_LEGAL_TAX_AMT;
 
             if ($this->getTransaction()->getCurrency() != self::MIN_LEGAL_TAX_CUR) {
