@@ -1,4 +1,4 @@
-### Calculate commissions
+### Commissions Calculator
 
 ##### Install PHP dependencies:
 ```
